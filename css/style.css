@@ -77,3 +77,18 @@ footer {
   background: #020617;
   color: #94a3b8;
 }
+
+
+.rating-box {
+  margin-top: 20px;
+  padding: 20px;
+  background: #020617;
+  border: 1px solid #0ea5e9;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.rating-stars {
+  font-size: 22px;
+  color: gold;
+}
