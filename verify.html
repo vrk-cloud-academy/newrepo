@@ -65,7 +65,8 @@ function verifyCert() {
     return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycbwIdTlu89GcuVnLOvMqLY8UuJXT_z7NOoWD1oxK_BeMGJ8302VnXglURyoWrjyvvf59/exec?id=" + id)
+  #fetch("https://script.google.com/macros/s/AKfycbwIdTlu89GcuVnLOvMqLY8UuJXT_z7NOoWD1oxK_BeMGJ8302VnXglURyoWrjyvvf59/exec?id=" + id)#
+  fetch("https://script.google.com/macros/s/AKfycbzdyuHxoLq1UUIeABZE6bW1fx6EV3GNA5CyCFvokHRKq6IUBA5fDuTKE0WiPr5qlsIY/exec?id=" + id)
     .then(res => res.json())
     .then(data => {
 
