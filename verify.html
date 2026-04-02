@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Certificate Validation - VRK Cloud Academy</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0B1F3A;
+  color: white;
+  text-align: center;
+  padding-top: 100px;
+}
+
+.card {
+  background: #132F4C;
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  margin: auto;
+}
+
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background: gold;
+  font-weight: bold;
+}
+
+.result {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎓 VRK Cloud Academy</h1>
+<h3>Certificate Validation Portal</h3>
+
+<div class="card">
+
+<input id="candidateId" placeholder="Enter Candidate ID">
+
+<button onclick="verifyCert()">Validate Certificate</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+function verifyCert() {
+  const id = document.getElementById("candidateId").value.trim();
+
+  if (!id) {
+    alert("Enter Candidate ID");
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbwIdTlu89GcuVnLOvMqLY8UuJXT_z7NOoWD1oxK_BeMGJ8302VnXglURyoWrjyvvf59/exec?id=" + id)
+    .then(res => res.json())
+    .then(data => {
+
+      if (data.status === "valid") {
+        document.getElementById("result").innerHTML = `
+          <div style="background:white;color:black;padding:15px;border-radius:8px;">
+          ✅ Verified Certificate<br><br>
+          <b>Name:</b> ${data.name}<br>
+          <b>Role:</b> ${data.role}<br>
+          <b>Duration:</b> ${data.duration}<br><br>
+          <a href="${data.certLink}" target="_blank">📄 View Certificate</a>
+          </div>
+        `;
+      } else {
+        document.getElementById("result").innerHTML =
+          `<div style="background:white;color:red;padding:10px;border-radius:8px;">❌ Invalid Candidate ID</div>`;
+      }
+    });
+}
+
+
+// 🔥 AUTO VERIFY (QR support)
+const params = new URLSearchParams(window.location.search);
+const idParam = params.get("id");
+
+if (idParam) {
+  document.getElementById("candidateId").value = idParam;
+  verifyCert();
+}
+
+</script>
+
+</body>
+</html>
