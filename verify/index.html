@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>VRK Certificate Verification</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0B1F3A;
+  color: white;
+  text-align: center;
+  padding-top: 100px;
+}
+
+.card {
+  background: #132F4C;
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  margin: auto;
+}
+
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background: gold;
+  font-weight: bold;
+}
+
+.result {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>🎓 Certificate Verification</h2>
+
+<input id="id" placeholder="Enter Candidate ID">
+<button onclick="verify()">Verify</button>
+
+<div id="result" class="result"></div>
+</div>
+
+<script>
+
+// 🔥 AUTO READ FROM URL
+const params = new URLSearchParams(window.location.search);
+const idParam = params.get("id");
+
+if (idParam) {
+  document.getElementById("id").value = idParam;
+  verify();
+}
+
+function verify() {
+  const id = document.getElementById("id").value;
+
+  fetch("https://script.google.com/macros/s/AKfycbxeZe6k5Ojn7CAo4TfYaMrGtuFyUXIW3ALSFFCVh7mQBoBe6QLIUuLOtZ_gILaVpeLx/exec?id=" + id)
+    .then(res => res.json())
+    .then(data => {
+
+      if (data.status === "valid") {
+        document.getElementById("result").innerHTML = `
+          <div style="background:white;color:black;padding:10px;">
+          ✅ Verified<br><br>
+          <b>Name:</b> ${data.name}<br>
+          <b>Role:</b> ${data.role}<br>
+          <b>Duration:</b> ${data.duration}<br><br>
+          <a href="${data.certLink}" target="_blank">📄 View Certificate</a>
+          </div>
+        `;
+      } else {
+        document.getElementById("result").innerHTML =
+          `<div style="background:white;color:red;padding:10px;">❌ Invalid ID</div>`;
+      }
+    });
+}
+
+</script>
+
+</body>
+</html>
